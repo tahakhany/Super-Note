@@ -1,6 +1,7 @@
 package com.taha.supernote;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "note_table")
@@ -14,6 +15,13 @@ public class Note {
     public String description;
 
     public Note(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
+    @Ignore
+    public Note(int id, String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }

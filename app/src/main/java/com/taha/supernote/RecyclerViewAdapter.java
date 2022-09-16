@@ -18,6 +18,7 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CardV
 
     Context context;
     List<Note> notes;
+    private onItemClickedListener listener;
 
     public RecyclerViewAdapter(Context context, List<Note> notes) {
         this.context = context;
@@ -51,6 +52,12 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CardV
         holder.titleTextView.setText(note.title);
         holder.descriptionTextView.setText(note.description);
         holder.cardView.setBackgroundColor(Color.parseColor("#191C1E"));
+
+        holder.cardView.setOnClickListener(view -> {
+            if(listener!=null && position!=RecyclerView.NO_POSITION){
+                listener.onItemClicked(notes.get(position));
+            }
+        });
     }
 
     public void setNotes(List<Note> notes) {
@@ -76,4 +83,13 @@ class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CardV
             cardView = itemView.findViewById(R.id.card_view_card_view);
         }
     }
+
+    public interface onItemClickedListener {
+        void onItemClicked(Note note);
+    }
+
+    public void setOnItemClickListener(onItemClickedListener listener){
+        this.listener = listener;
+    }
+
 }
